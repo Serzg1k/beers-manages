@@ -95,10 +95,14 @@ class BeerController extends Controller
         $beer = Beer::findOrFail($id);
         $makes = Make::get();
         $types = Type::get();
+        $beerMake = $beer->make ? $beer->make->id : 0;
+        $beerType = $beer->type ? $beer->type->id : 0;
 
         return view('beers.edit',
             [
                 'beer' => $beer,
+                'beerMake' => $beerMake,
+                'beerType' => $beerType,
                 'types' => $types,
                 'makes' => $makes
             ]);
