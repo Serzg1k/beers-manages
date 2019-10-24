@@ -11,6 +11,27 @@
             </div>
         </div>
     </div>
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <select name="filter[make_id]" id="inputState" class="form-control">
+                    <option value="">Choose...</option>
+                    @foreach ($makes as $make)
+                        <option value="{{ $make->id }}">{{ $make->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <select name="filter[type_id]" id="inputState" class="form-control">
+                    <option value="">Choose...</option>
+                    @foreach ($types as $type)
+                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -20,7 +41,6 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
             <th>Name</th>
             <th>Type</th>
             <th>Maker</th>
@@ -29,7 +49,6 @@
         </tr>
         @foreach ($beers as $beer)
             <tr>
-                <td>{{ ++$i }}</td>
                 <td>{{ $beer->name }}</td>
                 <td>{{ $beer->type->name }}</td>
                 <td>{{ $beer->make->name }}</td>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Make;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class MakeBeerController extends Controller
 {
@@ -14,10 +16,13 @@ class MakeBeerController extends Controller
      */
     public function index()
     {
-        $makes = Make::latest()->paginate(5);
+        $makes = QueryBuilder::for(Make::query())
+            ->allowedFilters([
+                AllowedFilter::scope('type', 'hasTypes'),
+            ])
+            ->get();
 
-        return view('makes.index',compact('makes'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('makes.index',compact('makes'));
     }
 
     /**

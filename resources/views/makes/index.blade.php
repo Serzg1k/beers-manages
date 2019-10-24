@@ -20,13 +20,11 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
             <th>Name</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($makes as $make)
             <tr>
-                <td>{{ ++$i }}</td>
                 <td>{{ $make->name }}</td>
                 <td>
                     <form action="{{ route('makes.destroy',$make->id) }}" method="POST">

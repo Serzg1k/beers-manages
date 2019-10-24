@@ -14,10 +14,9 @@ class TypeBeerController extends Controller
      */
     public function index()
     {
-        $types = Type::latest()->paginate(5);
+        $types = Type::latest()->get();
 
-        return view('types.index',compact('types'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('types.index',compact('types'));
     }
 
     /**

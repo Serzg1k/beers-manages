@@ -6,6 +6,7 @@ use App\Beer;
 use App\Make;
 use App\Type;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class BeerController extends Controller
 {
@@ -16,10 +17,20 @@ class BeerController extends Controller
      */
     public function index()
     {
-        $beers = Beer::get();
-
-        return view('beers.index',compact('beers'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        $beers = QueryBuilder::for(Beer::query())
+//            ->with([
+//                'make',
+//                'type',
+//            ])
+            ->allowedFilters(['name', 'make_id', 'type_id'])
+            ->get();
+        $makes = Make::get();
+        $types = Type::get();
+        return view('beers.index',[
+            'beers' => $beers,
+            'types' => $types,
+            'makes' => $makes,
+        ]);
     }
 
     /**

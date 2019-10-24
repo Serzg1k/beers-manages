@@ -8,6 +8,11 @@
 
 <div class="container">
     @yield('content')
+    <div class="row">
+        <div class="col text-center">
+            <a class="btn btn-danger" href="{{ route('home') }}">To home</a>
+        </div>
+    </div>
 </div>
 
 </body>

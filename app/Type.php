@@ -14,4 +14,9 @@ class Type extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function makes()
+    {
+        return $this->belongsToMany(Make::class, 'beers', 'make_id');
+    }
 }

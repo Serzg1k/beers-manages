@@ -20,13 +20,11 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
             <th>Name</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($types as $type)
             <tr>
-                <td>{{ ++$i }}</td>
                 <td>{{ $type->name }}</td>
                 <td>
                     <form action="{{ route('beers.destroy',$type->id) }}" method="POST">
