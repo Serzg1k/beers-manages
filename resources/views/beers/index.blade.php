@@ -17,7 +17,11 @@
                 <select name="filter[make_id]" id="inputState" class="form-control">
                     <option value="">Choose...</option>
                     @foreach ($makes as $make)
-                        <option value="{{ $make->id }}">{{ $make->name }}</option>
+                        <option
+                            @if(Request::get('filter')['make_id'] == $make->id)
+                                selected
+                            @endif
+                            value="{{ $make->id }}">{{ $make->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -25,7 +29,11 @@
                 <select name="filter[type_id]" id="inputState" class="form-control">
                     <option value="">Choose...</option>
                     @foreach ($types as $type)
-                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        <option
+                            @if(Request::get('filter')['type_id'] == $type->id)
+                                selected
+                            @endif
+                            value="{{ $type->id }}">{{ $type->name }}</option>
                     @endforeach
                 </select>
             </div>

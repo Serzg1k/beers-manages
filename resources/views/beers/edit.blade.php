@@ -39,7 +39,11 @@
                     <label for="type_id"><strong>Type:</strong></label>
                     <select name="type_id" class="form-control" id="type_id">
                         @foreach ($types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
+                            @if($type->id === $beer->type->id)
+                                <option selected value="{{$type->id}}">{{$type->name}}</option>
+                            @else
+                                <option value="{{$type->id}}">{{$type->name}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -49,7 +53,11 @@
                     <label for="make_id"><strong>Maker:</strong></label>
                     <select name="make_id" class="form-control" id="make_id">
                         @foreach ($makes as $make)
-                            <option value="{{$make->id}}">{{$make->name}}</option>
+                            @if($make->id === $beer->make->id)
+                                <option selected value="{{$make->id}}">{{$make->name}}</option>
+                            @else
+                                <option value="{{$make->id}}">{{$make->name}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -67,4 +75,6 @@
         </div>
 
     </form>
+@endsection
+@section('toHome')
 @endsection
