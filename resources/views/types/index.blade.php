@@ -27,7 +27,7 @@
             <tr>
                 <td>{{ $type->name }}</td>
                 <td>
-                    <form action="{{ route('beers.destroy',$type->id) }}" method="POST">
+                    <form action="{{ route('types.destroy',$type->id) }}" method="POST">
 
                         <a class="btn btn-primary" href="{{ route('types.edit',$type->id) }}">Edit</a>
 

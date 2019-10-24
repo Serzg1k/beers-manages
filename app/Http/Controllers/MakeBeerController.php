@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Make;
+use App\Type;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -21,8 +22,11 @@ class MakeBeerController extends Controller
                 AllowedFilter::scope('type', 'hasTypes'),
             ])
             ->get();
-
-        return view('makes.index',compact('makes'));
+        $types = Type::get();
+        return view('makes.index',[
+            'types' => $types,
+            'makes' => $makes,
+        ]);
     }
 
     /**
@@ -71,7 +75,12 @@ class MakeBeerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $make = Make::findOrFail($id);
+
+        return view('makes.edit',
+            [
+                'make' => $make,
+            ]);
     }
 
     /**
@@ -83,7 +92,14 @@ class MakeBeerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'string'],
+        ]);
+        $make = Make::findOrFail($id);
+        $make->name = $validatedData['name'];
+        $make->save();
+        return redirect()->route('makes.index')
+            ->with('success','Product created successfully.');
     }
 
     /**
@@ -94,6 +110,10 @@ class MakeBeerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $make = Make::find($id);
+        $make->delete();
+
+        return redirect()->route('makes.index')
+            ->with('success', 'Make deleted!');
     }
 }

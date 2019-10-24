@@ -65,7 +65,12 @@ class TypeBeerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Type::findOrFail($id);
+
+        return view('types.edit',
+            [
+                'type' => $type,
+            ]);
     }
 
     /**
@@ -77,7 +82,14 @@ class TypeBeerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'string'],
+        ]);
+        $type = Type::findOrFail($id);
+        $type->name = $validatedData['name'];
+        $type->save();
+        return redirect()->route('types.index')
+            ->with('success','Product created successfully.');
     }
 
     /**
@@ -88,6 +100,10 @@ class TypeBeerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $type = Type::findOrFail($id);
+        $type->delete();
+
+        return redirect()->route('types.index')
+            ->with('success', 'Type deleted!');
     }
 }

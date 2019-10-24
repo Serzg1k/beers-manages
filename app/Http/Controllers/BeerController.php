@@ -70,7 +70,7 @@ class BeerController extends Controller
         $beer->type()->associate($validatedData['type_id']);
         $beer->save();
         return redirect()->route('beers.index')
-            ->with('success','Product created successfully.');
+            ->with('success','Beer created successfully.');
     }
 
     /**
@@ -92,7 +92,16 @@ class BeerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $beer = Beer::findOrFail($id);
+        $makes = Make::get();
+        $types = Type::get();
+
+        return view('beers.edit',
+            [
+                'beer' => $beer,
+                'types' => $types,
+                'makes' => $makes
+            ]);
     }
 
     /**
@@ -104,7 +113,19 @@ class BeerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'make_id' => ['required', 'integer'],
+            'type_id' => ['required', 'integer'],
+        ]);
+        $beer = Beer::findOrFail($id);
+        $beer->fill($validatedData);
+        $beer->make()->associate($validatedData['make_id']);
+        $beer->type()->associate($validatedData['type_id']);
+        $beer->save();
+        return redirect()->route('beers.index')
+            ->with('success','Beer created successfully.');
     }
 
     /**
@@ -115,6 +136,10 @@ class BeerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $beer = Beer::find($id);
+        $beer->delete();
+
+        return redirect()->route('beers.index')
+            ->with('success', 'Beer deleted!');
     }
 }

@@ -11,6 +11,19 @@
             </div>
         </div>
     </div>
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <select name="filter[type]" id="inputState" class="form-control">
+                    <option value="">Choose...</option>
+                    @foreach ($types as $type)
+                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">

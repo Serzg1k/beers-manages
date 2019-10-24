@@ -50,8 +50,16 @@
         @foreach ($beers as $beer)
             <tr>
                 <td>{{ $beer->name }}</td>
-                <td>{{ $beer->type->name }}</td>
-                <td>{{ $beer->make->name }}</td>
+                @if($beer->type !== null)
+                    <td>{{ $beer->type->name }}
+                @else
+                    <td>empty</td>
+                @endif
+                @if($beer->make !== null)
+                    <td>{{ $beer->make->name }}</td>
+                @else
+                    <td>empty</td>
+                @endif
                 <td>{{ $beer->description }}</td>
                 <td>
                     <form action="{{ route('beers.destroy',$beer->id) }}" method="POST">
