@@ -64,7 +64,14 @@ class BeerController extends Controller
             'make_id' => ['required', 'integer'],
             'type_id' => ['required', 'integer'],
         ]);
-        $beer = new Beer();
+        $beer = Beer::withTrashed()
+            ->where('name', $validatedData['name'])
+            ->first();
+        if(!$beer){
+            $beer = new Beer();
+        }else{
+            $beer->restore();
+        }
         $beer->fill($validatedData);
         $beer->make()->associate($validatedData['make_id']);
         $beer->type()->associate($validatedData['type_id']);

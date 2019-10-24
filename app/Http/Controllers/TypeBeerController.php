@@ -40,7 +40,14 @@ class TypeBeerController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string'],
         ]);
-        $type = new Type($validatedData);
+        $type = Type::withTrashed()
+            ->where('name', $validatedData['name'])
+            ->first();
+        if(!$type){
+            $type = new Type($validatedData);
+        }else{
+            $type->restore();
+        }
         $type->save();
         return redirect()->route('types.index')
             ->with('success','Product created successfully.');

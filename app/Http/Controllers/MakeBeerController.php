@@ -50,7 +50,14 @@ class MakeBeerController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string'],
         ]);
-        $make = new Make($validatedData);
+        $make = Make::withTrashed()
+            ->where('name', $validatedData['name'])
+            ->first();
+        if(!$make){
+            $make = new Make($validatedData);
+        }else{
+            $make->restore();
+        }
         $make->save();
         return redirect()->route('makes.index')
             ->with('success','Product created successfully.');
