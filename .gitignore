@@ -51,4 +51,3 @@ coverage
 /public/.htpasswd
 
 .htaccess
-index.php
