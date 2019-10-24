@@ -40,3 +40,5 @@
 
     </form>
 @endsection
+@section('toHome')
+@endsection
