@@ -18,8 +18,10 @@
                     <option value="">Choose...</option>
                     @foreach ($types as $type)
                         <option
-                            @if(Request::get('filter')['type'] == $type->id)
-                                selected
+                            @if(Request::get('filter'))
+                                @if(Request::get('filter')['type'] == $type->id)
+                                    selected
+                                @endif
                             @endif
                             value="{{ $type->id }}">{{ $type->name }}</option>
                     @endforeach

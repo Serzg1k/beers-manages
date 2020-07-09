@@ -18,8 +18,10 @@
                     <option value="">Choose...</option>
                     @foreach ($makes as $make)
                         <option
-                            @if(Request::get('filter')['make_id'] == $make->id)
-                                selected
+                            @if(Request::get('filter'))
+                                @if(Request::get('filter')['make_id'] == $make->id)
+                                    selected
+                                @endif
                             @endif
                             value="{{ $make->id }}">{{ $make->name }}</option>
                     @endforeach
@@ -30,8 +32,10 @@
                     <option value="">Choose...</option>
                     @foreach ($types as $type)
                         <option
-                            @if(Request::get('filter')['type_id'] == $type->id)
-                                selected
+                            @if(Request::get('filter'))
+                                @if(Request::get('filter')['type_id'] == $type->id)
+                                    selected
+                                @endif
                             @endif
                             value="{{ $type->id }}">{{ $type->name }}</option>
                     @endforeach
